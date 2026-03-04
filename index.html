@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>UK Profits Dashboard</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="background-layer" aria-hidden="true"></div>
+    <main class="app-shell">
+      <header class="hero">
+        <h1>UK Profitability Dashboard</h1>
+        <p class="subtitle" id="subtitleText">
+          Explore labour, pure profit, and capital shares in UK corporate gross value added.
+        </p>
+        <section class="tabs card" role="tablist" aria-label="Dashboard pages">
+          <button
+            class="tab-button is-active"
+            id="tab-home"
+            data-page-id="home"
+            role="tab"
+            aria-selected="true"
+            type="button"
+          >
+            Home
+          </button>
+          <button
+            class="tab-button"
+            id="tab-data"
+            data-page-id="data"
+            role="tab"
+            aria-selected="false"
+            type="button"
+          >
+            Series
+          </button>
+        </section>
+      </header>
+
+      <section id="homeSection" class="card">
+        <p>
+          An interactive data dashboard with data on UK labour, pure profit, and capital shares in corporate gross value added.
+        </p>
+        <blockquote>
+          <p>
+            <strong>Citation:</strong>  Manuel, E., S. Piton and I. Yotzov (2024), "Firms' margins behaviour in response to energy shocks: Evidence from the UK", <em>Economics Letters</em> 235, 111506.
+          </p>
+        </blockquote>
+        <p>
+          <strong>Link to Paper:</strong> <a href="https://www.sciencedirect.com/science/article/abs/pii/S0165176523005323" target="_blank" rel="noopener noreferrer">Firms' margins behaviour in response to energy shocks</a>
+        </p>
+        <p>
+          <strong>Link to Underlying Data:</strong> <a href="https://docs.google.com/spreadsheets/d/1JH-yO6XuzuK81xpIovVxBA_Ss4RFpj5r/edit?usp=drivesdk&ouid=118050660930203159586&rtpof=true&sd=true" target="_blank" rel="noopener noreferrer">Historical Shares, 1970Q1-2025Q2</a>
+        </p>  
+        <div class="table-wrapper">
+          <table class="home-features-table">
+            <thead>
+              <tr>
+                <th>Series</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>ls</strong></td>
+                <td>Labour share in corporate sector gross value added</td>
+              </tr>
+              <tr>
+                <td><strong>ps</strong></td>
+                <td>Pure profit share in corporate sector gross value added</td>
+              </tr>
+              <tr>
+                <td><strong>cs</strong></td>
+                <td>Capital share in corporate sector gross value added</td>
+              </tr>
+              <tr>
+                <td><strong>goss</strong></td>
+                <td>Gross operating surplus share (= ps + cs)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="dataSection" hidden>
+        <section class="controls card" aria-label="Chart controls">
+          <div class="control-group">
+            <p class="control-title">Series</p>
+            <div id="seriesControls" class="series-controls"></div>
+          </div>
+        </section>
+
+        <section class="card">
+          <h2>Shares of UK Corporate Gross Value Added</h2>
+          <p class="chart-caption" id="chartCaption"></p>
+          <div id="chartWrap" class="chart-wrap">
+            <svg id="timeSeriesChart" viewBox="0 0 980 420" role="img" aria-label="Time-series chart"></svg>
+            <div id="chartTooltip" class="chart-tooltip" hidden></div>
+          </div>
+          <div class="range-slider-wrap" id="rangeSliderWrap" hidden>
+            <div class="range-labels">
+              <span id="rangeStartLabel"></span>
+              <span id="rangeEndLabel"></span>
+            </div>
+            <div class="range-slider">
+              <input type="range" id="rangeStart" min="0" max="1" value="0" step="1" />
+              <input type="range" id="rangeEnd" min="0" max="1" value="1" step="1" />
+            </div>
+            <button class="range-reset-btn" id="rangeResetBtn" type="button">Reset range</button>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <script src="data/uk-profits-data.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
