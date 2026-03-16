@@ -8,13 +8,10 @@
   </head>
   <body>
     <div class="background-layer" aria-hidden="true"></div>
-    <main class="app-shell">
-      <header class="hero">
-        <h1>UK Profitability Dashboard</h1>
-        <p class="subtitle" id="subtitleText">
-          Explore labour, pure profit, and capital shares in UK corporate gross value added.
-        </p>
-        <section class="tabs card" role="tablist" aria-label="Dashboard pages">
+    <div class="layout-wrapper">
+      <aside class="sidebar card" role="tablist" aria-label="Dashboard pages">
+        <h2 class="sidebar-title">Navigation</h2>
+        <nav class="sidebar-nav">
           <button
             class="tab-button is-active"
             id="tab-home"
@@ -35,8 +32,16 @@
           >
             Series
           </button>
-        </section>
-      </header>
+        </nav>
+      </aside>
+
+      <main class="app-shell">
+        <header class="hero">
+          <h1>UK Profitability Dashboard</h1>
+          <p class="subtitle" id="subtitleText">
+            Explore labour, pure profit, and capital shares in UK corporate gross value added.
+          </p>
+        </header>
 
       <section id="homeSection" class="card">
         <p>
@@ -112,6 +117,7 @@
         </section>
       </section>
     </main>
+    </div>
 
     <script src="data/uk-profits-data.js"></script>
     <script src="app.js"></script>
