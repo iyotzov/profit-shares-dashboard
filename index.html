@@ -32,6 +32,16 @@
           >
             Series
           </button>
+          <button
+            class="tab-button"
+            id="tab-shocks"
+            data-page-id="shocks"
+            role="tab"
+            aria-selected="false"
+            type="button"
+          >
+            Energy shocks
+          </button>
         </nav>
       </aside>
 
@@ -56,7 +66,7 @@
           <strong>Link to Paper:</strong> <a href="https://www.sciencedirect.com/science/article/abs/pii/S0165176523005323" target="_blank" rel="noopener noreferrer">Firms' margins behaviour in response to energy shocks</a>
         </p>
         <p>
-          <strong>Link to Underlying Data:</strong> <a href="https://docs.google.com/spreadsheets/d/1JH-yO6XuzuK81xpIovVxBA_Ss4RFpj5r/edit?usp=drivesdk&ouid=118050660930203159586&rtpof=true&sd=true" target="_blank" rel="noopener noreferrer">Historical Shares, 1970Q1-2025Q2</a>
+          <strong>Link to Underlying Data:</strong> <a href="https://docs.google.com/spreadsheets/d/16aVmWFWu49PQr-lD7spFjTF9rCz0QkCe/edit?usp=sharing&ouid=118050660930203159586&rtpof=true&sd=true" target="_blank" rel="noopener noreferrer">Historical Shares, 1970Q1-2025Q4</a>
         </p>  
         <div class="table-wrapper">
           <table class="home-features-table">
@@ -116,10 +126,36 @@
           </div>
         </section>
       </section>
+
+      <section id="shocksSection" hidden>
+        <section class="controls card" aria-label="Energy shock chart controls">
+          <div class="control-group">
+            <p class="control-title">Share</p>
+            <div id="shockSeriesControls" class="series-controls"></div>
+          </div>
+          <div class="control-group">
+            <p class="control-title">Energy shocks</p>
+            <div id="shockLegend" class="series-controls"></div>
+          </div>
+        </section>
+
+        <section class="card">
+          <h2>Cumulative change in shares around energy shocks</h2>
+          <p class="chart-caption" id="shockChartCaption">
+            Change in the selected share (percentage points) relative to the quarter of each shock.
+          </p>
+          <div id="shockChartWrap" class="chart-wrap">
+            <svg id="shockChart" viewBox="0 0 980 420" role="img" aria-label="Energy shock comparison chart"></svg>
+            <div id="shockChartTooltip" class="chart-tooltip" hidden></div>
+          </div>
+          <p class="chart-help">Lines are aligned so that quarter 0 is the start of each energy shock (1973Q4, 1979Q4, 2022Q1).</p>
+        </section>
+      </section>
     </main>
     </div>
 
     <script src="data/uk-profits-data.js"></script>
+    <script src="data/uk-profits-energy-shocks.js"></script>
     <script src="app.js"></script>
   </body>
 </html>
