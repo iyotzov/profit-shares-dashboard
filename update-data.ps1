@@ -29,14 +29,18 @@ $ErrorActionPreference = "Stop"
 # Resolve paths relative to this script so it works regardless of the
 # current working directory.
 $scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
-if (-not $CsvPath) { $CsvPath = Join-Path $scriptDir "data\uk-profits-data.csv" }
-if (-not $JsPath)  { $JsPath  = Join-Path $scriptDir "data\uk-profits-data.js" }
+$dataDir = Join-Path $scriptDir "data"
+if (-not $CsvPath) { $CsvPath = Join-Path $dataDir "uk-profits-data.csv" }
+if (-not $JsPath)  { $JsPath  = Join-Path $dataDir "uk-profits-data.js" }
 
 if (-not (Test-Path $CsvPath)) {
     throw "CSV file not found: $CsvPath"
 }
 
 $rows = Import-Csv -Path $CsvPath
+if (-not $rows) {
+    throw "CSV contains no data rows: $CsvPath"
+}
 
 # Expected columns from the source CSV.
 $required = @("date", "quarter", "ls", "ps", "cs", "goss")

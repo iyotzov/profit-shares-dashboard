@@ -9,15 +9,16 @@
   <body>
     <div class="background-layer" aria-hidden="true"></div>
     <div class="layout-wrapper">
-      <aside class="sidebar card" role="tablist" aria-label="Dashboard pages">
+      <aside class="sidebar card">
         <h2 class="sidebar-title">Navigation</h2>
-        <nav class="sidebar-nav">
+        <nav class="sidebar-nav" role="tablist" aria-label="Dashboard pages">
           <button
             class="tab-button is-active"
             id="tab-home"
             data-page-id="home"
             role="tab"
             aria-selected="true"
+            aria-controls="homeSection"
             type="button"
           >
             Home
@@ -28,6 +29,8 @@
             data-page-id="data"
             role="tab"
             aria-selected="false"
+            aria-controls="dataSection"
+            tabindex="-1"
             type="button"
           >
             Series
@@ -38,6 +41,8 @@
             data-page-id="shocks"
             role="tab"
             aria-selected="false"
+            aria-controls="shocksSection"
+            tabindex="-1"
             type="button"
           >
             Energy shocks
@@ -53,7 +58,7 @@
           </p>
         </header>
 
-      <section id="homeSection" class="card">
+      <section id="homeSection" class="card" role="tabpanel" aria-labelledby="tab-home">
         <p>
           An interactive data dashboard with data on UK labour, pure profit, and capital shares in corporate gross value added.
         </p>
@@ -98,7 +103,7 @@
         </div>
       </section>
 
-      <section id="dataSection" hidden>
+      <section id="dataSection" role="tabpanel" aria-labelledby="tab-data" hidden>
         <section class="controls card" aria-label="Chart controls">
           <div class="control-group">
             <p class="control-title">Series</p>
@@ -127,7 +132,7 @@
         </section>
       </section>
 
-      <section id="shocksSection" hidden>
+      <section id="shocksSection" role="tabpanel" aria-labelledby="tab-shocks" hidden>
         <section class="controls card" aria-label="Energy shock chart controls">
           <div class="control-group">
             <p class="control-title">Share</p>

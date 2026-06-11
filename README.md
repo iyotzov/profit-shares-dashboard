@@ -11,6 +11,7 @@ An interactive data dashboard visualising UK labour, pure profit, and capital sh
 No build step or server is required — the dashboard is a static HTML/CSS/JS application.
 
 - Open `index.html` in any modern web browser.
+- Updating generated data files requires PowerShell 5.1 or later.
 
 ---
 
@@ -102,7 +103,7 @@ When new data is released, follow these steps:
 
    Change `2025Q4` to the new latest quarter.
 
-4. **Check the result.** Open `index.html` in a browser and confirm the chart, range slider, and data table reflect the latest series.
+4. **Check the result.** Open `index.html` in a browser and confirm the chart and range slider reflect the latest series.
 
 ### Updating the energy-shock data
 
@@ -134,5 +135,5 @@ When new data is released, follow these steps:
 
 ## Notes
 
-- The chart, range slider, and table are generated dynamically from the data file, so no other code changes are needed when the data updates.
+- The charts and range slider are generated dynamically from the data files, so no other code changes are needed when the data updates.
 - If `update-data.ps1` reports a missing column or an unexpected date format, check that the CSV matches the [Data Format](#data-format) above.

@@ -94,6 +94,7 @@ function updateTabVisibility() {
     const isActive = button.dataset.pageId === state.activePage;
     button.classList.toggle("is-active", isActive);
     button.setAttribute("aria-selected", isActive ? "true" : "false");
+    button.tabIndex = isActive ? 0 : -1;
   });
 }
 
@@ -747,7 +748,7 @@ function renderShocksPage() {
 }
 
 function registerTabHandlers() {
-  tabButtons.forEach((button) => {
+  tabButtons.forEach((button, index) => {
     button.addEventListener("click", () => {
       state.activePage = button.dataset.pageId;
       updateTabVisibility();
@@ -756,6 +757,25 @@ function registerTabHandlers() {
       } else if (state.activePage === "shocks") {
         renderShocksPage();
       }
+    });
+
+    button.addEventListener("keydown", (event) => {
+      let nextIndex;
+      if (event.key === "ArrowDown" || event.key === "ArrowRight") {
+        nextIndex = (index + 1) % tabButtons.length;
+      } else if (event.key === "ArrowUp" || event.key === "ArrowLeft") {
+        nextIndex = (index - 1 + tabButtons.length) % tabButtons.length;
+      } else if (event.key === "Home") {
+        nextIndex = 0;
+      } else if (event.key === "End") {
+        nextIndex = tabButtons.length - 1;
+      } else {
+        return;
+      }
+
+      event.preventDefault();
+      tabButtons[nextIndex].click();
+      tabButtons[nextIndex].focus();
     });
   });
 }
