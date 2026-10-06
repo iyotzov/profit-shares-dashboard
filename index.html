@@ -9,16 +9,15 @@
   <body>
     <div class="background-layer" aria-hidden="true"></div>
     <div class="layout-wrapper">
-      <aside class="sidebar card">
+      <aside class="sidebar card" role="tablist" aria-label="Dashboard pages">
         <h2 class="sidebar-title">Navigation</h2>
-        <nav class="sidebar-nav" role="tablist" aria-label="Dashboard pages">
+        <nav class="sidebar-nav">
           <button
             class="tab-button is-active"
             id="tab-home"
             data-page-id="home"
             role="tab"
             aria-selected="true"
-            aria-controls="homeSection"
             type="button"
           >
             Home
@@ -29,8 +28,6 @@
             data-page-id="data"
             role="tab"
             aria-selected="false"
-            aria-controls="dataSection"
-            tabindex="-1"
             type="button"
           >
             Series
@@ -41,8 +38,6 @@
             data-page-id="shocks"
             role="tab"
             aria-selected="false"
-            aria-controls="shocksSection"
-            tabindex="-1"
             type="button"
           >
             Energy shocks
@@ -58,7 +53,7 @@
           </p>
         </header>
 
-      <section id="homeSection" class="card" role="tabpanel" aria-labelledby="tab-home">
+      <section id="homeSection" class="card">
         <p>
           An interactive data dashboard with data on UK labour, pure profit, and capital shares in corporate gross value added.
         </p>
@@ -71,7 +66,7 @@
           <strong>Link to Paper:</strong> <a href="https://www.sciencedirect.com/science/article/abs/pii/S0165176523005323" target="_blank" rel="noopener noreferrer">Firms' margins behaviour in response to energy shocks</a>
         </p>
         <p>
-          <strong>Link to Underlying Data:</strong> <a href="https://docs.google.com/spreadsheets/d/16aVmWFWu49PQr-lD7spFjTF9rCz0QkCe/edit?usp=sharing&ouid=118050660930203159586&rtpof=true&sd=true" target="_blank" rel="noopener noreferrer">Historical Shares, 1970Q1-2025Q4</a>
+          <strong>Link to Underlying Data:</strong> <a href="https://docs.google.com/spreadsheets/d/1WhZZTpcvk796e_7MbHnG2AlnS93NfX8h/edit?usp=sharing&ouid=118050660930203159586&rtpof=true&sd=true" target="_blank" rel="noopener noreferrer">Historical Shares, <span id="dataRangeLabel">1970Q1-2026Q2</span></a>
         </p>  
         <div class="table-wrapper">
           <table class="home-features-table">
@@ -103,7 +98,7 @@
         </div>
       </section>
 
-      <section id="dataSection" role="tabpanel" aria-labelledby="tab-data" hidden>
+      <section id="dataSection" hidden>
         <section class="controls card" aria-label="Chart controls">
           <div class="control-group">
             <p class="control-title">Series</p>
@@ -132,7 +127,7 @@
         </section>
       </section>
 
-      <section id="shocksSection" role="tabpanel" aria-labelledby="tab-shocks" hidden>
+      <section id="shocksSection" hidden>
         <section class="controls card" aria-label="Energy shock chart controls">
           <div class="control-group">
             <p class="control-title">Share</p>
@@ -153,7 +148,7 @@
             <svg id="shockChart" viewBox="0 0 980 420" role="img" aria-label="Energy shock comparison chart"></svg>
             <div id="shockChartTooltip" class="chart-tooltip" hidden></div>
           </div>
-          <p class="chart-help">Lines are aligned so that quarter 0 is the start of each energy shock (1973Q4, 1979Q4, 2022Q1).</p>
+          <p class="chart-help">Lines are aligned so that quarter 0 is the start of each energy shock (<span id="shockListLabel">1973Q4, 1979Q4, 2011Q1, 2022Q1</span>).</p>
         </section>
       </section>
     </main>

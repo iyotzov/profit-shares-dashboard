@@ -42,16 +42,16 @@ The dashboard reads its data from the generated `.js` files in `data/`, which ar
 
 | Column    | Description                              | Example     |
 |-----------|------------------------------------------|-------------|
-| `date`    | Quarter start date, `DD/MM/YYYY`         | `01/10/2025`|
-| `quarter` | Quarter label                            | `2025Q4`    |
-| `ls`      | Labour share (%)                         | `69.6823`   |
-| `ps`      | Pure profit share (%)                    | `17.1098`   |
-| `cs`      | Capital share (%)                        | `13.2078`   |
-| `goss`    | Gross operating surplus share (%)        | `30.3177`   |
+| `date`    | Quarter start date, `DD/MM/YYYY`         | `01/04/2026`|
+| `quarter` | Quarter label                            | `2026Q2`    |
+| `ls`      | Labour share (%)                         | `69.85`     |
+| `ps`      | Pure profit share (%)                    | `15.96`     |
+| `cs`      | Capital share (%)                        | `14.19`     |
+| `goss`    | Gross operating surplus share (%)        | `30.15`     |
 
 ### Energy-shock data
 
-The **Energy shocks** tab compares how each share evolved after three historical energy shocks (1973Q4, 1979Q4, 2022Q1), aligned so that quarter 0 is the start of each shock.
+The **Energy shocks** tab compares how each share evolved after four historical energy shocks (1973Q4, 1979Q4, 2011Q1, 2022Q1), aligned so that quarter 0 is the start of each shock.
 
 `data/uk-profits-energy-shocks.csv` must contain the following columns:
 
@@ -84,9 +84,9 @@ When new data is released, follow these steps:
 
    ```
    Updated ...\data\uk-profits-data.js
-     Rows written: 224
+     Rows written: 226
      First quarter: 1970Q1
-     Last quarter:  2025Q4
+     Last quarter:  2026Q2
    ```
 
    To use a CSV from a different location:
@@ -95,13 +95,11 @@ When new data is released, follow these steps:
    .\update-data.ps1 -CsvPath "C:\path\to\new-data.csv"
    ```
 
-3. **Update the date-range label.** If the last quarter has changed, edit `index.html` and update the underlying-data link text:
+3. **Check the date-range label.** The underlying-data link text on the Home tab is set automatically from the data when the page loads. For consistency, you can also update the fallback text in `index.html`:
 
    ```html
-   <a href="...">Historical Shares, 1970Q1-2025Q4</a>
+   Historical Shares, <span id="dataRangeLabel">1970Q1-2026Q2</span>
    ```
-
-   Change `2025Q4` to the new latest quarter.
 
 4. **Check the result.** Open `index.html` in a browser and confirm the chart and range slider reflect the latest series.
 

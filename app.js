@@ -5,11 +5,16 @@ const SERIES = [
   { key: "goss", label: "Gross operating surplus share", color: "#a78bfa" }
 ];
 
-const SHOCKS = [
-  { key: "1973Q4", label: "1973Q4 oil shock", color: "#38bdf8" },
-  { key: "1979Q4", label: "1979Q4 oil shock", color: "#f472b6" },
-  { key: "2022Q1", label: "2022Q1 energy shock", color: "#34d399" }
-];
+// Shocks are built from the data; these only override the default label/colour.
+const SHOCK_OVERRIDES = {
+  "1973Q4": { label: "1973Q4 oil shock", color: "#38bdf8" },
+  "1979Q4": { label: "1979Q4 oil shock", color: "#f472b6" },
+  "2011Q1": { label: "2011Q1 energy shock", color: "#f59e0b" },
+  "2022Q1": { label: "2022Q1 energy shock", color: "#34d399" }
+};
+const SHOCK_PALETTE = ["#38bdf8", "#f472b6", "#f59e0b", "#34d399", "#c084fc", "#fb7185", "#a3e635", "#e2e8f0"];
+
+let SHOCKS = [];
 
 const state = {
   activePage: "home",
@@ -19,7 +24,7 @@ const state = {
   rangeEnd: 0,
   shockRows: [],
   shockShare: "ps",
-  selectedShocks: new Set(SHOCKS.map((shock) => shock.key))
+  selectedShocks: new Set()
 };
 
 const tabButtons = Array.from(document.querySelectorAll(".tab-button"));
@@ -42,6 +47,8 @@ const shockLegend = document.getElementById("shockLegend");
 const shockChartCaption = document.getElementById("shockChartCaption");
 const shockChart = document.getElementById("shockChart");
 const shockChartTooltip = document.getElementById("shockChartTooltip");
+const dataRangeLabel = document.getElementById("dataRangeLabel");
+const shockListLabel = document.getElementById("shockListLabel");
 
 async function loadData() {
   if (!Array.isArray(window.UK_PROFITS_DATA)) {
@@ -73,6 +80,15 @@ function loadShockData() {
   })).sort((a, b) => a.period - b.period);
 }
 
+function buildShockList(shockRows) {
+  const keys = [...new Set(shockRows.map((row) => row.shock))].sort();
+  return keys.map((key, index) => ({
+    key,
+    label: SHOCK_OVERRIDES[key]?.label ?? `${key} energy shock`,
+    color: SHOCK_OVERRIDES[key]?.color ?? SHOCK_PALETTE[index % SHOCK_PALETTE.length]
+  }));
+}
+
 function formatPercent(value) {
   return `${value.toFixed(2)}%`;
 }
@@ -94,7 +110,6 @@ function updateTabVisibility() {
     const isActive = button.dataset.pageId === state.activePage;
     button.classList.toggle("is-active", isActive);
     button.setAttribute("aria-selected", isActive ? "true" : "false");
-    button.tabIndex = isActive ? 0 : -1;
   });
 }
 
@@ -748,7 +763,7 @@ function renderShocksPage() {
 }
 
 function registerTabHandlers() {
-  tabButtons.forEach((button, index) => {
+  tabButtons.forEach((button) => {
     button.addEventListener("click", () => {
       state.activePage = button.dataset.pageId;
       updateTabVisibility();
@@ -757,25 +772,6 @@ function registerTabHandlers() {
       } else if (state.activePage === "shocks") {
         renderShocksPage();
       }
-    });
-
-    button.addEventListener("keydown", (event) => {
-      let nextIndex;
-      if (event.key === "ArrowDown" || event.key === "ArrowRight") {
-        nextIndex = (index + 1) % tabButtons.length;
-      } else if (event.key === "ArrowUp" || event.key === "ArrowLeft") {
-        nextIndex = (index - 1 + tabButtons.length) % tabButtons.length;
-      } else if (event.key === "Home") {
-        nextIndex = 0;
-      } else if (event.key === "End") {
-        nextIndex = tabButtons.length - 1;
-      } else {
-        return;
-      }
-
-      event.preventDefault();
-      tabButtons[nextIndex].click();
-      tabButtons[nextIndex].focus();
     });
   });
 }
@@ -791,12 +787,20 @@ async function init() {
     throw error;
   }
 
+  if (state.rows.length > 0) {
+    dataRangeLabel.textContent = `${state.rows[0].quarter}-${state.rows[state.rows.length - 1].quarter}`;
+  }
+
   try {
     state.shockRows = loadShockData();
   } catch (error) {
     shockChartCaption.textContent = "Unable to load energy-shock dataset.";
     console.error(error);
   }
+
+  SHOCKS = buildShockList(state.shockRows);
+  state.selectedShocks = new Set(SHOCKS.map((shock) => shock.key));
+  shockListLabel.textContent = SHOCKS.map((shock) => shock.key).join(", ");
 
   buildSeriesControls();
   initRangeSlider();
